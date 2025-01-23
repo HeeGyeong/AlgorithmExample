@@ -22,9 +22,7 @@ import com.example.algorithmexample.ui.AlgorithmMainHeader
 
 
 @Composable
-fun TwoSumAlgorithmUI(
-    onBackEvent: () -> Unit,
-) {
+fun TwoSumAlgorithmUI() {
     var input by remember { mutableStateOf("") }
     var targetInput by remember { mutableStateOf("") }
     var result1 by remember { mutableStateOf("") }
@@ -121,5 +119,5 @@ fun findTwoSumBruteForce(nums: List<Int>, target: Int): List<Int> {
 @Preview(showBackground = true)
 @Composable
 fun PreviewTwoSumAlgorithmUI() {
-    TwoSumAlgorithmUI(onBackEvent = {})
+    TwoSumAlgorithmUI()
 }
