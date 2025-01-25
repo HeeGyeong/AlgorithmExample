@@ -87,6 +87,17 @@ fun runAlgorithm(
     return "$result (Time: ${endTime - startTime} ms)"
 }
 
+/**
+ * 해시 맵을 사용하여 Two Sum 문제를 해결합니다.
+ * 리스트의 숫자를 순회하면서 각 숫자에 대해 목표 값과의 목표 값을 계산합니다.
+ * 목표가 맵에 존재하면 두 숫자의 인덱스를 반환합니다.
+ * 그렇지 않으면 숫자와 그 인덱스를 맵에 저장합니다.
+ *
+ * 시간 복잡도: O(n) - 리스트를 한 번 순회합니다.
+ * 공간 복잡도: O(n) - 맵에 최대 n개의 요소를 저장합니다.
+ * 장점: O(n) 시간 복잡도로 인해 큰 리스트에 대해 효율적입니다.
+ * 단점: 해시 맵을 위한 추가 공간이 필요합니다.
+ */
 fun findTwoSum(nums: List<Int>, target: Int): List<Int> {
     val map = mutableMapOf<Int, Int>()
     for ((index, num) in nums.withIndex()) {
@@ -102,6 +113,16 @@ fun findTwoSum(nums: List<Int>, target: Int): List<Int> {
     return emptyList()
 }
 
+/**
+ * 브루트 포스를 사용하여 Two Sum 문제를 해결합니다.
+ * 목표 값에 합이 되는 쌍을 찾기 위해 모든 가능한 숫자 쌍을 검사합니다.
+ * 첫 번째로 찾은 쌍의 인덱스를 반환합니다.
+ *
+ * 시간 복잡도: O(n^2) - 각 숫자 쌍을 검사합니다.
+ * 공간 복잡도: O(1) - 추가 공간을 사용하지 않습니다.
+ * 장점: 추가 데이터 구조 없이 간단하며, 성능이 중요하지 않은 작은 리스트에 유용합니다.
+ * 단점: O(n^2) 시간 복잡도로 인해 큰 리스트에 비효율적입니다.
+ */
 fun findTwoSumBruteForce(nums: List<Int>, target: Int): List<Int> {
     for (i in nums.indices) {
         for (j in i + 1 until nums.size) {
