@@ -22,7 +22,7 @@ import com.example.algorithmexample.ui.AlgorithmMainHeader
 
 
 @Composable
-fun TwoSumAlgorithmUI() {
+fun TwoSumUI() {
     var input by remember { mutableStateOf("") }
     var targetInput by remember { mutableStateOf("") }
     var result1 by remember { mutableStateOf("") }
@@ -34,9 +34,9 @@ fun TwoSumAlgorithmUI() {
             .background(Color.White)
     ) {
         AlgorithmMainHeader(
-            title = "TwoSum Algorithm",
+            title = "TwoSum Problem",
             algorithmName = "Two Sum",
-            algorithmDescription = "주어진 배열에서 두 수의 합이 목표값(target)이 되는 두 수의 인덱스를 찾는 알고리즘",
+            algorithmDescription = "주어진 배열에서 두 수의 합이 목표값(target)이 되는 두 수의 인덱스를 찾는 문제",
         )
 
         TextField(
@@ -118,6 +118,6 @@ fun findTwoSumBruteForce(nums: List<Int>, target: Int): List<Int> {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewTwoSumAlgorithmUI() {
-    TwoSumAlgorithmUI()
+fun PreviewTwoSumUI() {
+    TwoSumUI()
 }
