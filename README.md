@@ -1,6 +1,7 @@
 # AlgorithmExample
 
 알고리즘 문제 해결을 위한 샘플 프로젝트입니다.
+
 각 알고리즘의 구현과 설명을 Jetpack Compose를 사용하여 UI로 표현했습니다.
 
 ## 프로젝트 설명
