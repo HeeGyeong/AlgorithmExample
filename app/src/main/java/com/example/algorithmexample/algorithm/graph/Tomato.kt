@@ -178,9 +178,3 @@ fun calculateTomato(tomatoBox: Array<IntArray>, n: Int, m: Int): Int {
 
     return if (normalTomato == 0) days else -1
 }
-
-@Preview(showBackground = true)
-@Composable
-fun GraphAlgorithmUI() {
-    TomatoUI()
-}
