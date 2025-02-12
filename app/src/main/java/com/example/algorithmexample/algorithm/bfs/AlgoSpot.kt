@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
 import java.util.LinkedList
@@ -100,7 +99,7 @@ fun AlgoSpotProblemUI() {
                     inputArray.split(",").map { it.trim().toInt() }
                 }
                 val maze = Array(n) { i -> Array(m) { j -> numbers[i * m + j] } }
-                
+
                 val startTime = System.currentTimeMillis()
                 output1 = minWallsToBreakBFS(maze, n, m).toString()
                 val endTime = System.currentTimeMillis()
@@ -135,7 +134,7 @@ fun AlgoSpotProblemUI() {
                     inputArray.split(",").map { it.trim().toInt() }
                 }
                 val maze = Array(n) { i -> Array(m) { j -> numbers[i * m + j] } }
-                
+
                 val startTime = System.currentTimeMillis()
                 output2 = minWallsToBreakDFS(maze, n, m).toString()
                 val endTime = System.currentTimeMillis()
@@ -249,10 +248,4 @@ fun minWallsToBreakDFS(maze: Array<Array<Int>>, n: Int, m: Int): Int {
 
     dfs(0, 0, 0)
     return visited[n - 1][m - 1]
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AlgoSpotPreview() {
-    AlgoSpotProblemUI()
 }
