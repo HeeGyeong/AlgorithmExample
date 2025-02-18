@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
+import com.example.algorithmexample.util.measureExecutionTime
 
 
 @Composable
@@ -53,22 +54,28 @@ fun TwoSumUI() {
         )
 
         Button(onClick = {
-            result1 = runAlgorithm(::findTwoSum, input, targetInput)
+            val (funResult, elapsedTime) = measureExecutionTime {
+                runAlgorithm(::findTwoSum, input, targetInput)
+            }
+            result1 = "Output: $funResult (수행 시간 ${elapsedTime}ms)"
         }) {
             Text("Hash Run")
         }
 
-        Text(text = "Output: $result1")
+        Text(text = result1)
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(onClick = {
-            result2 = runAlgorithm(::findTwoSumBruteForce, input, targetInput)
+            val (funResult, elapsedTime) = measureExecutionTime {
+                runAlgorithm(::findTwoSumBruteForce, input, targetInput)
+            }
+            result2 = "Output: $funResult (수행 시간 ${elapsedTime}ms)"
         }) {
             Text("BruteForce Run")
         }
 
-        Text(text = "Output: $result2")
+        Text(text = result2)
     }
 }
 

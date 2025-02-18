@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
+import com.example.algorithmexample.util.measureExecutionTime
 
 /**
  * 와인 테이스팅 문제
@@ -28,8 +29,8 @@ import com.example.algorithmexample.ui.AlgorithmMainHeader
 fun WineTastingUI() {
     var n by remember { mutableStateOf("") }
     var wineInputs by remember { mutableStateOf("") }
-    var result1 by remember { mutableStateOf<Int?>(null) }
-    var result2 by remember { mutableStateOf<Int?>(null) }
+    var result1 by remember { mutableStateOf("") }
+    var result2 by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -67,7 +68,10 @@ fun WineTastingUI() {
             }
 
             if (wines.size == size) {
-                result1 = maxWine(size, wines)
+                val (funResult, elapsedTime) = measureExecutionTime {
+                    maxWine(size, wines)
+                }
+                result1 = "최대로 마실 수 있는 포도주의 양: $funResult (수행 시간 ${elapsedTime}ms)"
             }
         }) {
             Text("dp로 계산하기")
@@ -75,8 +79,8 @@ fun WineTastingUI() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        result1?.let {
-            Text("최대로 마실 수 있는 포도주의 양: $it")
+        if (result1.isNotEmpty()) {
+            Text(result1)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -90,7 +94,10 @@ fun WineTastingUI() {
             }
 
             if (wines.size == size) {
-                result2 = recursiveHelper(wines, 0, 0, 0)
+                val (funResult, elapsedTime) = measureExecutionTime {
+                    recursiveHelper(wines, 0, 0, 0)
+                }
+                result2 = "최대로 마실 수 있는 포도주의 양: $funResult (수행 시간 ${elapsedTime}ms)"
             }
         }) {
             Text("backtracking으로 계산하기")
@@ -98,8 +105,8 @@ fun WineTastingUI() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        result2?.let {
-            Text("최대로 마실 수 있는 포도주의 양: $it")
+        if (result2.isNotEmpty()) {
+            Text(result2)
         }
     }
 }

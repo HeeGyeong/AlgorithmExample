@@ -18,10 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
+import com.example.algorithmexample.util.measureExecutionTime
 
 @Composable
 fun PalindromeLinkedListUI() {
     var input by remember { mutableStateOf("") }
+    var resultText1 by remember { mutableStateOf("") }
+    var resultText2 by remember { mutableStateOf("") }
+    var resultText3 by remember { mutableStateOf("") }
     val results = remember { mutableStateOf(listOf<Boolean?>(null, null, null)) }
     val defaultInputText =
         "1,2,3,4,5,6,7,8,9,0,9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,0,9,8,7,6,5,4,3,2,1"
@@ -43,28 +47,59 @@ fun PalindromeLinkedListUI() {
             label = { Text("팰린드롬을 확인할 문자열을 입력해주세요.") }
         )
 
-        val algorithms = listOf(
-            "to pointer Run" to ::isPalindromeList,
-            "stack Run" to ::isPalindromeUsingStack,
-            "reverse string Run" to ::isPalindromeUsingReverseString
-        )
-
-        algorithms.forEachIndexed { index, (buttonText, algorithm) ->
-            Button(onClick = {
+        Button(onClick = {
+            val (_, elapsedTime) = measureExecutionTime {
                 results.value = results.value.toMutableList().apply {
                     val inputList = input.ifEmpty { defaultInputText }.split(",").map { it.trim() }
                     if (inputList.any { it.isEmpty() }) {
                         Log.e("PalindromeLinkedList", "Invalid input: $input")
                     } else {
-                        this[index] = algorithm(inputList)
+                        this[0] = isPalindromeList(inputList)
                     }
                 }
-            }) {
-                Text(buttonText)
             }
-            Text(text = "Output: ${results.value[index]}")
-            Spacer(modifier = Modifier.height(20.dp))
+            resultText1 = "Output: ${results.value[0]} (수행 시간 ${elapsedTime}ms)"
+        }) {
+            Text("to pointer Run")
         }
+        Text(text = resultText1)
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(onClick = {
+            val (_, elapsedTime) = measureExecutionTime {
+                results.value = results.value.toMutableList().apply {
+                    val inputList = input.ifEmpty { defaultInputText }.split(",").map { it.trim() }
+                    if (inputList.any { it.isEmpty() }) {
+                        Log.e("PalindromeLinkedList", "Invalid input: $input")
+                    } else {
+                        this[1] = isPalindromeUsingStack(inputList)
+                    }
+                }
+            }
+            resultText2 = "Output: ${results.value[1]} (수행 시간 ${elapsedTime}ms)"
+        }) {
+            Text("stack Run")
+        }
+        Text(text = resultText2)
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(onClick = {
+            val (_, elapsedTime) = measureExecutionTime {
+                results.value = results.value.toMutableList().apply {
+                    val inputList = input.ifEmpty { defaultInputText }.split(",").map { it.trim() }
+                    if (inputList.any { it.isEmpty() }) {
+                        Log.e("PalindromeLinkedList", "Invalid input: $input")
+                    } else {
+                        this[2] = isPalindromeUsingReverseString(inputList)
+                    }
+                }
+            }
+            resultText3 = "Output: ${results.value[2]} (수행 시간 ${elapsedTime}ms)"
+        }) {
+            Text("reverse string Run")
+        }
+        Text(text = resultText3)
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 

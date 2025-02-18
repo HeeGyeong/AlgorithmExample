@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
+import com.example.algorithmexample.util.measureExecutionTime
 import java.util.LinkedList
 import java.util.Queue
 
@@ -100,10 +101,10 @@ fun AlgoSpotProblemUI() {
                 }
                 val maze = Array(n) { i -> Array(m) { j -> numbers[i * m + j] } }
 
-                val startTime = System.currentTimeMillis()
-                output1 = minWallsToBreakBFS(maze, n, m).toString()
-                val endTime = System.currentTimeMillis()
-                output1 += " (BFS 수행 시간: ${endTime - startTime}ms)"
+                val (result, elapsedTime) = measureExecutionTime {
+                    minWallsToBreakDFS(maze, n, m).toString()
+                }
+                output1 = "$result (BFS 수행 시간: ${elapsedTime}ms)"
             } catch (e: Exception) {
                 errorMessage = "입력값을 확인하세요."
             }
@@ -135,10 +136,11 @@ fun AlgoSpotProblemUI() {
                 }
                 val maze = Array(n) { i -> Array(m) { j -> numbers[i * m + j] } }
 
-                val startTime = System.currentTimeMillis()
-                output2 = minWallsToBreakDFS(maze, n, m).toString()
-                val endTime = System.currentTimeMillis()
-                output2 += " (DFS 수행 시간: ${endTime - startTime}ms)"
+                val (result, elapsedTime) = measureExecutionTime {
+                    minWallsToBreakDFS(maze, n, m).toString()
+                }
+
+                output2 = "$result (DFS 수행 시간: ${elapsedTime}ms)"
             } catch (e: Exception) {
                 errorMessage = "입력값을 확인하세요."
             }

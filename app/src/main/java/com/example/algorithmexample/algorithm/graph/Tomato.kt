@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
+import com.example.algorithmexample.util.measureExecutionTime
 import java.util.LinkedList
 import java.util.Queue
 
@@ -29,7 +30,7 @@ import java.util.Queue
 fun TomatoUI() {
     var n by remember { mutableStateOf("") }
     var m by remember { mutableStateOf("") }
-    val result = remember { mutableStateOf<Int?>(null) }
+    val result = remember { mutableStateOf("") }
     val isClick = remember { mutableStateOf(false) }
 
     // 토마토 박스 예제들을 리스트로 정의
@@ -94,11 +95,15 @@ fun TomatoUI() {
             currentTomatoBox = tomatoExamples.random()
             n = currentTomatoBox.second.toString()
             m = currentTomatoBox.first.toString()
-            result.value = calculateTomato(
-                currentTomatoBox.third,
-                currentTomatoBox.second,
-                currentTomatoBox.first
-            )
+
+            val (funResult, elapsedTime) = measureExecutionTime {
+                calculateTomato(
+                    currentTomatoBox.third,
+                    currentTomatoBox.second,
+                    currentTomatoBox.first
+                )
+            }
+            result.value = "결과: $funResult (수행 시간 ${elapsedTime}ms)"
             isClick.value = true
         }) {
             Text("예제 랜덤으로 계산하기")
@@ -114,8 +119,8 @@ fun TomatoUI() {
             Spacer(modifier = Modifier.height(8.dp))
         }
 
-        result.value?.let {
-            Text("결과: $it")
+        if (result.value.isNotEmpty()) {
+            Text(result.value)
         }
 
     }

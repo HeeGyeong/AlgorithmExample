@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
+import com.example.algorithmexample.util.measureExecutionTime
 
 /**
  * 짝수 팰린드롬 문제
@@ -49,18 +50,17 @@ fun PalindromeUI() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-            val startTime = System.nanoTime()
             val inputText = if (input.trim().isEmpty()) {
                 "1 1 5 6 7 7 6 5 5 5"
             } else {
                 input.trim()
             }
             val numbers = inputText.split(" ").mapNotNull { it.toIntOrNull() }.toIntArray()
-            val palindromeCount = checkPalindromeBackward(numbers, numbers.size)
-            val endTime = System.nanoTime()
-            val executionTime = (endTime - startTime) / 1_000_000.0 // 밀리초로 변환
+            val (result, elapsedTime) = measureExecutionTime {
+                checkPalindromeBackward(numbers, numbers.size)
+            }
             result1 =
-                "최대 팰린드롬 개수: $palindromeCount (수행시간: ${String.format("%.3f", executionTime)}ms)"
+                "최대 팰린드롬 개수: $result (수행시간: ${elapsedTime}ms)"
         }) {
             Text("Palindrome Backward")
         }
@@ -97,7 +97,7 @@ fun PalindromeUI() {
 /**
  * 주어진 배열을 뒤에서부터 검사하며 최대 짝수 팰린드롬 분할 개수를 구하는 함수
  * dp[i]는 0부터 i까지의 부분 배열에서 가능한 최대 짝수 팰린드롬 분할 개수를 저장
- * 
+ *
  * 시간 복잡도: O(N^3) - N은 배열 크기, isPalindrome 검사에 O(N)
  * 공간 복잡도: O(N) - dp 배열 저장용
  */
@@ -121,7 +121,7 @@ fun checkPalindromeBackward(defaultArray: IntArray, size: Int): Int {
 /**
  * 주어진 배열을 앞에서부터 검사하며 최대 짝수 팰린드롬 분할 개수를 구하는 함수
  * checkPalindromeBackward와 동일한 결과를 반환하지만 반복문의 진행 방향이 반대
- * 
+ *
  * 시간 복잡도: O(N^3) - N은 배열 크기, isPalindrome 검사에 O(N)
  * 공간 복잡도: O(N) - dp 배열 저장용
  */

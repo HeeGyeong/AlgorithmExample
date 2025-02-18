@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.algorithmexample.ui.AlgorithmMainHeader
+import com.example.algorithmexample.util.measureExecutionTime
 
 /**
  * 빙산 문제
@@ -22,7 +23,7 @@ import com.example.algorithmexample.ui.AlgorithmMainHeader
  */
 @Composable
 fun IcebergUI() {
-    val result = remember { mutableStateOf<Int?>(null) }
+    val resultText = remember { mutableStateOf("") }
     val initialArray = remember {
         arrayOf(
             intArrayOf(0, 0, 0, 0, 0, 0, 0),
@@ -48,7 +49,11 @@ fun IcebergUI() {
             val copiedArray = Array(5) { i ->
                 IntArray(7) { j -> initialArray[i][j] }
             }
-            result.value = calculateIceberg(copiedArray, 5, 7)
+
+            val (funResult, elapsedTime) = measureExecutionTime {
+                calculateIceberg(copiedArray, 5, 7)
+            }
+            resultText.value = "결과: $funResult 년 (수행 시간 ${elapsedTime}ms)"
         }) {
             Text("계산하기")
         }
@@ -60,8 +65,8 @@ fun IcebergUI() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        result.value?.let {
-            Text("결과: $it 년")
+        if (resultText.value.isNotEmpty()) {
+            Text(resultText.value)
         }
     }
 }
@@ -69,7 +74,7 @@ fun IcebergUI() {
 /**
  * 빙산이 분리되는데 걸리는 시간(년)을 계산하는 함수
  * 매년 빙산의 높이가 주변 바다 칸의 개수만큼 줄어들고, 빙산이 2개 이상으로 분리되는 시점을 찾는다
- * 
+ *
  * 시간 복잡도: O(N*M*Y) - N,M은 배열 크기, Y는 빙산이 분리될 때까지 걸리는 년수
  * 공간 복잡도: O(N*M) - 임시 배열 저장용
  */
@@ -143,7 +148,7 @@ fun checkIslandCount(iceArray: Array<IntArray>, n: Int, m: Int): Int {
 /**
  * 연결된 빙산을 탐색하는 DFS 함수
  * 현재 위치에서 상하좌우로 연결된 빙산을 재귀적으로 방문
- * 
+ *
  * 시간 복잡도: O(N*M) - 최악의 경우 모든 칸 방문
  * 공간 복잡도: O(N*M) - 재귀 호출 스택
  */
